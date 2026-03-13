@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-class CustomInput extends StatefulWidget {
+class CustomTextFormField extends StatefulWidget {
   final String hintText;
   final IconData? prefixIcon;
   final bool isPassword;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final FocusNode? focusNode;
-  final Function(String)? onSubmitted;
+  final Function(String)? onFieldSubmitted;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
-  const CustomInput({
+  const CustomTextFormField({
     Key? key,
     required this.hintText,
     this.prefixIcon,
@@ -18,15 +19,16 @@ class CustomInput extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
     this.focusNode,
-    this.onSubmitted,
+    this.onFieldSubmitted,
     this.controller,
+    this.validator,
   }) : super(key: key);
 
   @override
-  _CustomInputState createState() => _CustomInputState();
+  _CustomTextFormFieldState createState() => _CustomTextFormFieldState();
 }
 
-class _CustomInputState extends State<CustomInput> {
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
   late bool _isObscure;
 
   @override
@@ -37,13 +39,15 @@ class _CustomInputState extends State<CustomInput> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      // PHIÊN BẢN 2: Dùng TextFormField
       controller: widget.controller,
       focusNode: widget.focusNode,
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       obscureText: _isObscure,
-      onSubmitted: widget.onSubmitted,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      validator: widget.validator, // Gắn cổng báo lỗi
       decoration: InputDecoration(
         hintText: widget.hintText,
         prefixIcon: widget.prefixIcon != null
@@ -75,6 +79,14 @@ class _CustomInputState extends State<CustomInput> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: const BorderSide(color: Color(0xFFEE4D2D), width: 2.0),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: const BorderSide(color: Colors.red, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: const BorderSide(color: Colors.red, width: 2.0),
         ),
       ),
     );
