@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'custom_text_form_field.dart';
+import '../validators/validator.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final FocusNode _phoneFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
-
+  final TextEditingController _passwordController = TextEditingController();
   @override
   void dispose() {
     _nameFocus.dispose();
@@ -24,6 +25,7 @@ class _RegisterFormState extends State<RegisterForm> {
     _phoneFocus.dispose();
     _passwordFocus.dispose();
     _confirmPasswordFocus.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -43,7 +45,8 @@ class _RegisterFormState extends State<RegisterForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_emailFocus);
             },
-            validator: null,
+            //validator: null,
+            validator: Validator.required,
           ),
 
           const SizedBox(height: 16),
@@ -55,7 +58,8 @@ class _RegisterFormState extends State<RegisterForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_phoneFocus);
             },
-            validator: null,
+            //validator: null,
+            validator: Validator.email,
           ),
 
           const SizedBox(height: 16),
@@ -68,31 +72,61 @@ class _RegisterFormState extends State<RegisterForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_passwordFocus);
             },
-            validator: null,
+            //validator: null,
+            validator: Validator.phone,
           ),
 
           const SizedBox(height: 16),
 
+          // CustomTextFormField(
+          //   hintText: 'Mật khẩu',
+          //   prefixIcon: Icons.lock_outline,
+          //   isPassword: true,
+          //   focusNode: _passwordFocus,
+          //   onFieldSubmitted: (_) {
+          //     FocusScope.of(context).requestFocus(_confirmPasswordFocus);
+          //   },
+          //   validator: null,
+          // ),
           CustomTextFormField(
             hintText: 'Mật khẩu',
             prefixIcon: Icons.lock_outline,
             isPassword: true,
+            controller: _passwordController,
             focusNode: _passwordFocus,
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_confirmPasswordFocus);
             },
-            validator: null,
+            validator: Validator.password,
           ),
 
           const SizedBox(height: 16),
 
+          // CustomTextFormField(
+          //   hintText: 'Xác nhận mật khẩu',
+          //   prefixIcon: Icons.lock_reset,
+          //   isPassword: true,
+          //   focusNode: _confirmPasswordFocus,
+          //   textInputAction: TextInputAction.done,
+          //   validator: null,
+          // ),
           CustomTextFormField(
             hintText: 'Xác nhận mật khẩu',
             prefixIcon: Icons.lock_reset,
             isPassword: true,
             focusNode: _confirmPasswordFocus,
             textInputAction: TextInputAction.done,
-            validator: null,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Vui lòng nhập lại mật khẩu";
+              }
+
+              if (value != _passwordController.text) {
+                return "Mật khẩu xác nhận không khớp";
+              }
+
+              return null;
+            },
           ),
 
           const SizedBox(height: 32),
