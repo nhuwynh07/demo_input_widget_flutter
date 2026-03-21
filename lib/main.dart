@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class DemoScreen extends StatefulWidget {
-  const DemoScreen({Key? key}) : super(key: key);
+  const DemoScreen({super.key});
 
   @override
   _DemoScreenState createState() => _DemoScreenState();
@@ -64,7 +64,7 @@ class _DemoScreenState extends State<DemoScreen> {
               ),
               Switch(
                 value: _isAdvancedMode,
-                activeColor: Colors.white,
+                activeThumbColor: Colors.white,
                 activeTrackColor: Colors.orange[300],
                 inactiveThumbColor: Colors.white,
                 inactiveTrackColor: Colors.grey[500],

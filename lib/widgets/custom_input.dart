@@ -11,7 +11,7 @@ class CustomInput extends StatefulWidget {
   final TextEditingController? controller;
 
   const CustomInput({
-    Key? key,
+    super.key,
     required this.hintText,
     this.prefixIcon,
     this.isPassword = false,
@@ -20,7 +20,7 @@ class CustomInput extends StatefulWidget {
     this.focusNode,
     this.onSubmitted,
     this.controller,
-  }) : super(key: key);
+  });
 
   @override
   _CustomInputState createState() => _CustomInputState();

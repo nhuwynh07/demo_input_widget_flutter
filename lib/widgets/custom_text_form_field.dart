@@ -12,7 +12,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
     required this.hintText,
     this.prefixIcon,
     this.isPassword = false,
@@ -22,7 +22,7 @@ class CustomTextFormField extends StatefulWidget {
     this.onFieldSubmitted,
     this.controller,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   _CustomTextFormFieldState createState() => _CustomTextFormFieldState();

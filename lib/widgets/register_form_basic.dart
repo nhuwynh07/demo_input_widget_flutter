@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'custom_input.dart';
 
 class RegisterFormBasic extends StatefulWidget {
-  const RegisterFormBasic({Key? key}) : super(key: key);
+  const RegisterFormBasic({super.key});
 
   @override
   _RegisterFormBasicState createState() => _RegisterFormBasicState();

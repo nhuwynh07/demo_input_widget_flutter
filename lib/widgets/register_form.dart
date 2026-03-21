@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'custom_checkbox.dart';
+import 'custom_dropdown.dart';
 import 'custom_text_form_field.dart';
 import '../validators/validator.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key}) : super(key: key);
+  const RegisterForm({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _RegisterFormState createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
+  String? _selectedCity;
+  bool _acceptedTerms = false;
 
   final FocusNode _nameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
@@ -126,6 +131,28 @@ class _RegisterFormState extends State<RegisterForm> {
               }
 
               return null;
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          CustomCityDropdown(
+            value: _selectedCity,
+            onChanged: (value) {
+              setState(() {
+                _selectedCity = value;
+              });
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          CustomTermsCheckbox(
+            value: _acceptedTerms,
+            onChanged: (value) {
+              setState(() {
+                _acceptedTerms = value;
+              });
             },
           ),
 
