@@ -1,6 +1,39 @@
 import 'package:flutter/material.dart';
 
 class CustomCityDropdown extends StatelessWidget {
+	static const Map<String, String> cityLabels = {
+		'hcm': 'TP. Hồ Chí Minh',
+		'hn': 'Hà Nội',
+		'dn': 'Đà Nẵng',
+		'ct': 'Cần Thơ',
+		'hp': 'Hải Phòng',
+		'bd': 'Bắc Đông',
+		'yd': 'Yên Bái',
+		'ql': 'Quảng Ninh',
+		'td': 'Thái Đông',
+		'lb': 'Lạng Sơn',
+		'nd': 'Nghệ An',
+		'ha': 'Hà Tĩnh',
+		'qt': 'Quảng Trị',
+		'th': 'Thừa Thiên - Huế',
+		'qn': 'Quảng Nam',
+		'qg': 'Quảng Ngãi',
+		'bn': 'Bình Định',
+		'pt': 'Phú Yên',
+		'kb': 'Khánh Hòa',
+		'nn': 'Ninh Thuận',
+		'nb': 'Ninh Bình',
+		'bp': 'Bình Phước',
+		'br': 'Bình Rượu',
+		'bg': 'Bạc Liêu',
+		'cg': 'Cà Mau',
+		'ag': 'An Giang',
+		'vl': 'Vĩnh Long',
+		'sd': 'Sóc Trăng',
+		'tv': 'Trà Vinh',
+		'dt': 'Đồng Tháp',
+	};
+
 	final String? value;
 	final ValueChanged<String?> onChanged;
 	final String? Function(String?)? validator;
@@ -15,7 +48,7 @@ class CustomCityDropdown extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 		return DropdownButtonFormField<String>(
-			value: value,
+			initialValue: value,
 			decoration: InputDecoration(
 				hintText: 'Chọn thành phố',
 				prefixIcon: Icon(Icons.location_city_outlined, color: Colors.grey[600]),
@@ -42,38 +75,12 @@ class CustomCityDropdown extends StatelessWidget {
 					borderSide: const BorderSide(color: Colors.red, width: 2.0),
 				),
 			),
-			items: const [
-				DropdownMenuItem(value: 'hcm', child: Text('TP. Hồ Chí Minh')),
-				DropdownMenuItem(value: 'hn', child: Text('Hà Nội')),
-				DropdownMenuItem(value: 'dn', child: Text('Đà Nẵng')),
-				DropdownMenuItem(value: 'ct', child: Text('Cần Thơ')),
-				DropdownMenuItem(value: 'hp', child: Text('Hải Phòng')),
-				DropdownMenuItem(value: 'bd', child: Text('Bắc Đông')),
-				DropdownMenuItem(value: 'yd', child: Text('Yên Bái')),
-				DropdownMenuItem(value: 'ql', child: Text('Quảng Ninh')),
-				DropdownMenuItem(value: 'td', child: Text('Thái Đông')),
-				DropdownMenuItem(value: 'lb', child: Text('Lạng Sơn')),
-				DropdownMenuItem(value: 'nd', child: Text('Nghệ An')),
-				DropdownMenuItem(value: 'ha', child: Text('Hà Tĩnh')),
-				DropdownMenuItem(value: 'qt', child: Text('Quảng Trị')),
-				DropdownMenuItem(value: 'th', child: Text('Thừa Thiên - Huế')),
-				DropdownMenuItem(value: 'qn', child: Text('Quảng Nam')),
-				DropdownMenuItem(value: 'qg', child: Text('Quảng Ngãi')),
-				DropdownMenuItem(value: 'bn', child: Text('Bình Định')),
-				DropdownMenuItem(value: 'pt', child: Text('Phú Yên')),
-				DropdownMenuItem(value: 'kb', child: Text('Khánh Hòa')),
-				DropdownMenuItem(value: 'nn', child: Text('Ninh Thuận')),
-				DropdownMenuItem(value: 'nb', child: Text('Ninh Bình')),
-				DropdownMenuItem(value: 'bp', child: Text('Bình Phước')),
-				DropdownMenuItem(value: 'br', child: Text('Bình Rượu')),
-				DropdownMenuItem(value: 'bg', child: Text('Bạc Liêu')),
-				DropdownMenuItem(value: 'cg', child: Text('Cà Mau')),
-				DropdownMenuItem(value: 'ag', child: Text('An Giang')),
-				DropdownMenuItem(value: 'vl', child: Text('Vĩnh Long')),
-				DropdownMenuItem(value: 'sd', child: Text('Sóc Trăng')),
-				DropdownMenuItem(value: 'tv', child: Text('Trà Vinh')),
-				DropdownMenuItem(value: 'dv', child: Text('Đồng Tháp')),
-			],
+			items: cityLabels.entries
+				.map((entry) => DropdownMenuItem(
+					value: entry.key,
+					child: Text(entry.value),
+				))
+				.toList(),
 			onChanged: onChanged,
 			validator:
 					validator ??

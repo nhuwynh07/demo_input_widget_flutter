@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'custom_checkbox.dart';
 import 'custom_dropdown.dart';
-import 'custom_text_form_field.dart';
+import 'custom_textformfield.dart';
 import '../validators/validator.dart';
+import '../screens/success_screen.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _RegisterFormState createState() => _RegisterFormState();
 }
 
@@ -22,6 +22,9 @@ class _RegisterFormState extends State<RegisterForm> {
   final FocusNode _phoneFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
   void dispose() {
@@ -30,6 +33,9 @@ class _RegisterFormState extends State<RegisterForm> {
     _phoneFocus.dispose();
     _passwordFocus.dispose();
     _confirmPasswordFocus.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -46,6 +52,7 @@ class _RegisterFormState extends State<RegisterForm> {
             hintText: 'Họ và tên',
             prefixIcon: Icons.person_outline,
             keyboardType: TextInputType.name,
+            controller: _nameController,
             focusNode: _nameFocus,
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_emailFocus);
@@ -59,6 +66,7 @@ class _RegisterFormState extends State<RegisterForm> {
             hintText: 'Email',
             prefixIcon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
+            controller: _emailController,
             focusNode: _emailFocus,
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_phoneFocus);
@@ -73,6 +81,7 @@ class _RegisterFormState extends State<RegisterForm> {
             hintText: 'Số điện thoại',
             prefixIcon: Icons.phone_android,
             keyboardType: TextInputType.phone,
+            controller: _phoneController,
             focusNode: _phoneFocus,
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_passwordFocus);
@@ -161,13 +170,25 @@ class _RegisterFormState extends State<RegisterForm> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      '🎉 Chúc mừng! Form hợp lệ, chuẩn bị gọi API!',
+                if (!_acceptedTerms) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('⚠️ Vui lòng đồng ý với các điều khoản!'),
+                      backgroundColor: Colors.red,
+                      behavior: SnackBarBehavior.floating,
                     ),
-                    backgroundColor: Colors.green,
-                    behavior: SnackBarBehavior.floating,
+                  );
+                  return;
+                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SuccessScreen(
+                      name: _nameController.text,
+                      email: _emailController.text,
+                      phone: _phoneController.text,
+                      city: _selectedCity != null ? CustomCityDropdown.cityLabels[_selectedCity] ?? 'Chưa chọn' : 'Chưa chọn',
+                    ),
                   ),
                 );
               } else {
@@ -201,3 +222,5 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 }
+
+
