@@ -57,8 +57,13 @@ class _RegisterFormState extends State<RegisterForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_emailFocus);
             },
-            //validator: null,
-            validator: Validator.required,
+            //validator: Validator.required,
+            validator: (String? value) {
+              if (value == null || value.trim().isEmpty) {
+                return "Không được để trống!";
+              }
+              return null;
+            },
           ),
 
           const SizedBox(height: 16),
@@ -71,8 +76,22 @@ class _RegisterFormState extends State<RegisterForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_phoneFocus);
             },
-            //validator: null,
-            validator: Validator.email,
+            //validator: Validator.email,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Email không được để trống!";
+              }
+
+              final emailRegex = RegExp(
+                r'^[\w\.-]+@([\w\-]+\.)+[a-zA-Z]{2,4}$',
+              );
+
+              if (!emailRegex.hasMatch(value)) {
+                return "Email sai định dạng!";
+              }
+
+              return null;
+            },
           ),
 
           const SizedBox(height: 16),
@@ -86,22 +105,24 @@ class _RegisterFormState extends State<RegisterForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_passwordFocus);
             },
-            //validator: null,
-            validator: Validator.phone,
+            //validator: Validator.phone,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Số điện thoại không được để trống!";
+              }
+
+              final phoneRegex = RegExp(r'^[0-9]{10}$');
+
+              if (!phoneRegex.hasMatch(value)) {
+                return "Số điện thoại phải 10 số!";
+              }
+
+              return null;
+            },
           ),
 
           const SizedBox(height: 16),
 
-          // CustomTextFormField(
-          //   hintText: 'Mật khẩu',
-          //   prefixIcon: Icons.lock_outline,
-          //   isPassword: true,
-          //   focusNode: _passwordFocus,
-          //   onFieldSubmitted: (_) {
-          //     FocusScope.of(context).requestFocus(_confirmPasswordFocus);
-          //   },
-          //   validator: null,
-          // ),
           CustomTextFormField(
             hintText: 'Mật khẩu',
             prefixIcon: Icons.lock_outline,
@@ -116,14 +137,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
           const SizedBox(height: 16),
 
-          // CustomTextFormField(
-          //   hintText: 'Xác nhận mật khẩu',
-          //   prefixIcon: Icons.lock_reset,
-          //   isPassword: true,
-          //   focusNode: _confirmPasswordFocus,
-          //   textInputAction: TextInputAction.done,
-          //   validator: null,
-          // ),
           CustomTextFormField(
             hintText: 'Xác nhận mật khẩu',
             prefixIcon: Icons.lock_reset,
