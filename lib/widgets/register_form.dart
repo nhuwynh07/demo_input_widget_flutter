@@ -58,9 +58,6 @@ class _RegisterFormState extends State<RegisterForm> {
   final FocusNode _phoneFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AutovalidateMode _autoValidateMode =
       AutovalidateMode.onUserInteraction; // Tự động validate khi người dùng tương tác
@@ -72,9 +69,6 @@ class _RegisterFormState extends State<RegisterForm> {
     _phoneFocus.dispose();
     _passwordFocus.dispose();
     _confirmPasswordFocus.dispose();
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -88,7 +82,6 @@ class _RegisterFormState extends State<RegisterForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextFormField(
-            controller: _nameController,
             autovalidateMode: _autoValidateMode,
             keyboardType: TextInputType.name,
             focusNode: _nameFocus,
@@ -131,7 +124,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
           const SizedBox(height: 16),
           TextFormField(
-            controller: _emailController,
             autovalidateMode: _autoValidateMode,
             keyboardType: TextInputType.emailAddress,
             focusNode: _emailFocus,
@@ -175,7 +167,6 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16),
 
           TextFormField(
-            controller: _phoneController,
             autovalidateMode: _autoValidateMode,
             keyboardType: TextInputType.phone,
             focusNode: _phoneFocus,
@@ -408,16 +399,6 @@ class _RegisterFormState extends State<RegisterForm> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                if (!_acceptedTerms) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('⚠️ Vui lòng đồng ý với các điều khoản!'),
-                      backgroundColor: Colors.red,
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
-                  return;
-                }
 
                 _formKey.currentState!.save();
 
