@@ -15,7 +15,7 @@ class CustomCityDropdown extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 		return DropdownButtonFormField<String>(
-			value: value,
+			initialValue: value,
 			decoration: InputDecoration(
 				hintText: 'Chọn thành phố',
 				prefixIcon: Icon(Icons.location_city_outlined, color: Colors.grey[600]),
