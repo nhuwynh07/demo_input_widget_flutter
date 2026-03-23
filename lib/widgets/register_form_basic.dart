@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'custom_input.dart';
+import 'custom_textfield.dart';
 
 class RegisterFormBasic extends StatefulWidget {
   const RegisterFormBasic({super.key});
@@ -110,7 +110,7 @@ class _RegisterFormBasicState extends State<RegisterFormBasic> {
             ),
           ),
           child: const Text(
-            'ĐĂNG KÝ (BẢN CƠ BẢN)',
+            'ĐĂNG KÝ',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,

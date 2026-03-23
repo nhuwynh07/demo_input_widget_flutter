@@ -5,19 +5,26 @@ class CustomTermsCheckbox extends FormField<bool> {
 		super.key,
 		required bool value,
 		required ValueChanged<bool> onChanged,
+		AutovalidateMode super.autovalidateMode = AutovalidateMode.disabled,
 		String? Function(bool?)? validator,
+		super.errorBuilder,
 		String label = 'Tôi cam kết thông tin là chính xác',
+		String defaultErrorText = 'Vui lòng đồng ý cam kết',
 	}) : super(
 				 initialValue: value,
 				 validator:
 						 validator ??
 						 (v) {
 							 if (v != true) {
-								 return 'Bạn cần đồng ý cam kết';
+								 return defaultErrorText;
 							 }
 							 return null;
 						 },
 				 builder: (state) {
+					 final Widget? builtError = state.hasError && state.errorText != null
+							 ? state.widget.errorBuilder?.call(state.context, state.errorText!)
+							 : null;
+
 					 return Column(
 						 crossAxisAlignment: CrossAxisAlignment.start,
 						 children: [
@@ -48,10 +55,11 @@ class CustomTermsCheckbox extends FormField<bool> {
 							 if (state.hasError)
 								 Padding(
 									 padding: const EdgeInsets.only(left: 12, top: 6),
-									 child: Text(
-										 state.errorText ?? '',
-										 style: const TextStyle(color: Colors.red, fontSize: 12),
-									 ),
+									 child: builtError ??
+										 Text(
+											 state.errorText ?? defaultErrorText,
+											 style: const TextStyle(color: Colors.red, fontSize: 12),
+										 ),
 								 ),
 						 ],
 					 );
